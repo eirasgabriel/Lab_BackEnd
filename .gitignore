@@ -1,0 +1,10 @@
+# Ambiente virtual (recriado com: pip install -r requirements.txt)
+.venv/
+venv/
+
+# Arquivos gerados pelo Python
+__pycache__/
+*.pyc
+
+# Banco local do Django (gerado com migrate)
+db.sqlite3

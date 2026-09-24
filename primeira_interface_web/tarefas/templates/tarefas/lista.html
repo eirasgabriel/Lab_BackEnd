@@ -1,0 +1,25 @@
+{% extends "tarefas/base.html" %}
+
+{% block titulo %}{{ titulo_pagina }}{% endblock %}
+
+{% block conteudo %}
+  <h1>{{ titulo_pagina }}</h1>
+
+  {% if tarefas %}
+    <table>
+      <tr><th>#</th><th>Título</th><th>Prioridade</th><th>Situação</th></tr>
+      {% for tarefa in tarefas %}
+        <tr>
+          <td>{{ tarefa.id }}</td>
+          <td>{{ tarefa.titulo }}</td>
+          <td>{{ tarefa.prioridade }}</td>
+          <td class="{{ tarefa.situacao }}">{{ tarefa.situacao }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>Nenhuma tarefa cadastrada.</p>
+  {% endif %}
+
+  <p><a href="{% url 'inicio' %}">Voltar ao início</a></p>
+{% endblock %}

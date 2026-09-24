@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Gestão de Tarefas{% endblock %}</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    nav a { margin-right: 1rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border-bottom: 1px solid #ddd; padding: .5rem; text-align: left; }
+    .Concluída { color: #2e7d32; } .Pendente { color: #c62828; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'inicio' %}">Início</a>
+    <a href="{% url 'lista_tarefas' %}">Todas</a>
+    <a href="{% url 'tarefas_pendentes' %}">Pendentes</a>
+    <a href="{% url 'sobre' %}">Sobre</a>
+  </nav>
+  <hr>
+  {% block conteudo %}{% endblock %}
+</body>
+</html>

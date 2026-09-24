@@ -1,0 +1,7 @@
+{% extends "tarefas/base.html" %}
+
+{% block conteudo %}
+  <h1>Sistema Web de Gestão de Tarefas</h1>
+  <p>Existem {{ total }} tarefas cadastradas.</p>
+  <p><a href="{% url 'lista_tarefas' %}">Ver lista de tarefas</a></p>
+{% endblock %}
