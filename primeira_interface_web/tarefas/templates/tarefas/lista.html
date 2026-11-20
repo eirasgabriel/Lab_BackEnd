@@ -7,13 +7,18 @@
 
   {% if tarefas %}
     <table>
-      <tr><th>#</th><th>Título</th><th>Prioridade</th><th>Situação</th></tr>
+      <tr>
+        <th>#</th><th>Título</th><th>Categoria</th><th>Data prevista</th>
+        <th>Prioridade</th><th>Situação</th>
+      </tr>
       {% for tarefa in tarefas %}
         <tr>
           <td>{{ tarefa.id }}</td>
           <td>{{ tarefa.titulo }}</td>
-          <td>{{ tarefa.prioridade }}</td>
-          <td class="{{ tarefa.situacao }}">{{ tarefa.situacao }}</td>
+          <td>{{ tarefa.categoria }}</td>
+          <td>{{ tarefa.data_prevista|date:"d/m/Y" }}</td>
+          <td>{{ tarefa.get_prioridade_display }}</td>
+          <td class="situacao-{{ tarefa.situacao|lower }}">{{ tarefa.get_situacao_display }}</td>
         </tr>
       {% endfor %}
     </table>

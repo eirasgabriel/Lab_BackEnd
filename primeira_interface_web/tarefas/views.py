@@ -1,27 +1,28 @@
-"""Views: recebem a requisição, preparam os dados e devolvem uma resposta."""
+"""Views: recebem a requisição, consultam o banco e devolvem uma resposta."""
 from django.http import HttpResponse
 from django.shortcuts import render
 
-# Dados EM MEMÓRIA (o banco de dados com models chega nas próximas semanas).
-TAREFAS = [
-    {"id": 1, "titulo": "Configurar ambiente virtual", "prioridade": "Alta", "situacao": "Concluída"},
-    {"id": 2, "titulo": "Criar rotas com urls.py", "prioridade": "Alta", "situacao": "Pendente"},
-    {"id": 3, "titulo": "Montar template da lista", "prioridade": "Média", "situacao": "Pendente"},
-    {"id": 4, "titulo": "Escrever README", "prioridade": "Baixa", "situacao": "Concluída"},
-]
+from .models import Tarefa
 
 
 def inicio(request):
-    return render(request, "tarefas/inicio.html", {"total": len(TAREFAS)})
+    return render(request, "tarefas/inicio.html", {"total": Tarefa.objects.count()})
 
 
 def lista_tarefas(request):
-    contexto = {"titulo_pagina": "Todas as tarefas", "tarefas": TAREFAS}
+    # select_related busca a categoria na mesma consulta, evitando uma
+    # consulta extra por tarefa quando o template exibe tarefa.categoria.
+    tarefas = Tarefa.objects.select_related("categoria").order_by("data_prevista")
+    contexto = {"titulo_pagina": "Todas as tarefas", "tarefas": tarefas}
     return render(request, "tarefas/lista.html", contexto)
 
 
 def tarefas_pendentes(request):
-    pendentes = [t for t in TAREFAS if t["situacao"] == "Pendente"]
+    pendentes = (
+        Tarefa.objects.select_related("categoria")
+        .filter(situacao=Tarefa.Situacao.PENDENTE)
+        .order_by("data_prevista")
+    )
     contexto = {"titulo_pagina": "Tarefas pendentes", "tarefas": pendentes}
     return render(request, "tarefas/lista.html", contexto)
 
