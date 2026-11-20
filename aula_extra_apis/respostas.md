@@ -1,7 +1,7 @@
 # Atividade: APIs com Django e FastAPI
 Data: 20/11/2026
-Aluno 1 / matrícula:
-Aluno 2 / matrícula:
+Aluno 1 / matrícula: Gabriel Júnior Eiras Veneno / 202423004
+Aluno 2 / matrícula: —
 
 > Valores observados com os dois servidores recém-iniciados (listas em memória no estado
 > inicial), usando `curl` no terminal. Saídas completas em [EVIDENCIAS.md](EVIDENCIAS.md).
