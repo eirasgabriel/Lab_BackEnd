@@ -10,6 +10,7 @@ Atividades práticas (hands-on) da disciplina.
 | 04 | `gerenciador_chamados/` | Gerenciador de chamados internos | `python gerenciador_chamados.py` |
 | 05 | `controle_tarefas/` | Refatoração de um controle interno de tarefas | `python main.py` |
 | 06 | `primeira_interface_web/` | Primeira interface web do Sistema de Gestão de Tarefas | `python manage.py runserver` |
+| 10 | `siga_django/` | SIGA — integração e entrega com Django | `python manage.py migrate && python manage.py runserver` |
 
 Entre na pasta da atividade (`cd nome_da_pasta`) antes de executar.
 
