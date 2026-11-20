@@ -1,0 +1,9 @@
+:root{font-family:system-ui,sans-serif;color:#182b42;background:#f3f6fa}*{box-sizing:border-box}
+body{margin:0}header{background:#132d46;color:white;padding:20px 5%;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+header strong{font-size:28px}header form{margin-left:auto}nav{padding:16px 5%;background:white;display:flex;gap:22px;flex-wrap:wrap}
+a{color:#075d82}main{max-width:1100px;margin:36px auto;padding:0 24px;min-height:65vh}h1{font-size:34px}
+.rotulo{color:#087e83;letter-spacing:2px}.cards{display:flex;gap:20px;flex-wrap:wrap}.cards article{background:white;border-left:4px solid #119b94;padding:28px;flex:1;min-width:180px}
+.cards strong{font-size:36px;display:block}button,.botao{background:#096c83;color:white;padding:10px 18px;border:0;border-radius:5px;cursor:pointer;text-decoration:none}
+input,select{display:block;padding:10px;margin:8px 0;border:1px solid #97a6b5;border-radius:4px;max-width:100%;width:420px}
+label{font-weight:600}table{border-collapse:collapse;width:100%;background:white}td,th{padding:16px;text-align:left;border-bottom:1px solid #dce3ed}
+.tabela{overflow:auto;margin-top:24px}.aviso{background:#d9eee9;padding:16px}.errorlist{color:#a51c30}footer{padding:24px 5%;color:#536477}

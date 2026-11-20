@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block content %}<h1>Entrar no SIGA</h1>
+<p>Use a conta criada pelo professor ou pelo comando createsuperuser.</p>
+<form method="post">{% csrf_token %}{{ form.as_p }}
+<input type="hidden" name="next" value="{{ next }}"><button>Entrar</button></form>{% endblock %}

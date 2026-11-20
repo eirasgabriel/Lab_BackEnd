@@ -1,0 +1,13 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIGA • Laboratório Back End</title><link rel="stylesheet" href="{% static 'estilo.css' %}"></head>
+<body><header><strong>SIGA</strong><span>Gestão acadêmica · Django</span>
+{% if user.is_authenticated %}<span>{{ user.username }}</span>
+<form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>Sair</button></form>{% endif %}</header>
+{% if user.is_authenticated %}<nav><a href="{% url 'painel' %}">Painel</a>
+<a href="{% url 'listar' 'alunos' %}">Alunos</a><a href="{% url 'listar' 'professores' %}">Professores</a>
+<a href="{% url 'listar' 'disciplinas' %}">Disciplinas</a><a href="{% url 'listar' 'turmas' %}">Turmas</a>
+<a href="{% url 'listar' 'matriculas' %}">Matrículas e notas</a></nav>{% endif %}
+<main>{% for message in messages %}<p role="status" class="aviso">{{ message }}</p>{% endfor %}
+{% block content %}{% endblock %}</main><footer>Laboratório de Programação Back End · Prof. Ralfh Varges Ansuattigui</footer></body></html>
