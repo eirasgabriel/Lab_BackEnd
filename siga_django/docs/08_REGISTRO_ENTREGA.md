@@ -114,9 +114,37 @@ aleatoriamente, mantidas só em variáveis de ambiente da sessão e não foram g
 | 11 | Sair e atualizar página protegida | Solicitação de login | `POST /sair/` → `302 /entrar/`; `GET /matriculas/` → `302 /entrar/?next=/matriculas/` | Conforme |
 | 12 | Fechar e reiniciar o servidor | Dados persistem no SQLite | Após parar (porta sem resposta, código `000`) e subir de novo: professor, disciplina e turma criados continuam; aluno excluído continua ausente; dados demo presentes; painel "3 alunos 2 turmas 3 matrículas" | Conforme |
 
-**Não verificado:** a aparência das páginas (CSS, layout, legibilidade) e o comportamento
-de um navegador real (preenchimento de formulários, botões, envio do cookie CSRF pelo
-navegador). Essas conferências ficam para a aula, no navegador.
+**Conferência no navegador (20/11/2026):** depois do roteiro por HTTP, o fluxo foi repetido
+no navegador com um superusuário e um leitor sem "Membro da equipe", criados localmente
+(sem senhas registradas). Log do servidor nesse trecho:
+
+```text
+[20/Nov/2026 09:14:48] "GET /turmas/1/editar/ HTTP/1.1" 302 0
+[20/Nov/2026 09:14:48] "GET /entrar/?next=/turmas/1/editar/ HTTP/1.1" 200 1585
+[20/Nov/2026 09:15:42] "POST /sair/ HTTP/1.1" 302 0
+[20/Nov/2026 09:15:44] "GET /matriculas/ HTTP/1.1" 302 0
+[20/Nov/2026 09:15:44] "GET /entrar/?next=/matriculas/ HTTP/1.1" 200 1154
+[20/Nov/2026 09:16:08] "POST /entrar/ HTTP/1.1" 302 0
+[20/Nov/2026 09:16:26] "GET /matriculas/5/editar/ HTTP/1.1" 200 2154
+[20/Nov/2026 09:16:32] "POST /matriculas/5/editar/ HTTP/1.1" 200 2319
+[20/Nov/2026 09:16:42] "GET /disciplinas/3/excluir/ HTTP/1.1" 200 1147
+[20/Nov/2026 09:16:43] "POST /disciplinas/3/excluir/ HTTP/1.1" 302 0
+[20/Nov/2026 09:16:43] "GET /disciplinas/ HTTP/1.1" 200 1606
+```
+
+| Verificação no navegador | Observado |
+|---|---|
+| Leitor consulta as listas | Alunos, professores, turmas e matrículas abriram (200) |
+| Leitor abre URL de edição | `302 /entrar/?next=/turmas/1/editar/` |
+| Sair e recarregar página protegida | `POST /sair/` e depois `GET /matriculas/` → `302 /entrar/?next=/matriculas/` |
+| Editor: nota 11 na tela do SIGA | `POST /matriculas/5/editar/` → 200 (formulário com erro); notas continuaram 5,00 e 7,00 no banco |
+| Editor: excluir disciplina vinculada | `POST /disciplinas/3/excluir/` → 302; disciplina continuou no banco (3 disciplinas) |
+| Notas 5 e 7 | Média 6,00 e Aprovado |
+
+Nessa conferência, professor, disciplina, turma, aluno e a matrícula com notas 5 e 7 foram
+cadastrados pelo Django Admin, e não pelos formulários do SIGA. A criação pelos formulários
+do SIGA foi verificada só no roteiro HTTP (ações 2 a 5). A aparência das páginas (CSS,
+layout) não foi avaliada formalmente.
 
 Saída do roteiro (convertida de cp1252 para UTF-8; conteúdo inalterado):
 
@@ -212,7 +240,7 @@ servidor 1 parado; resposta agora: 000
   siga_django`. A execução remota não foi verificada.
 - O projeto exige Django 6.0.5 (Python 3.12 a 3.14), incompatível com o Django 5.2 de
   `primeira_interface_web/`; por isso usa um `.venv` próprio dentro de `siga_django/`.
-- Conferência visual em navegador não realizada (ver "Não verificado").
+- A aparência das páginas (CSS, layout) não foi avaliada formalmente.
 
 ### Refatoração e evidência antes/depois
 
@@ -228,7 +256,7 @@ ____
 
 - [x] Requisitos implementados e limitações declaradas. (R01–R12 cobertos pela suíte de 16 testes; R09 para professor/disciplina conferido na ação 7; limitações na seção acima)
 - [x] check sem erros; migrações sem pendências; suíte aprovada. (saídas acima)
-- [ ] Fluxo manual com editor e leitor conferido no navegador. (O fluxo com editor e leitor foi executado por HTTP real, ações 1–12, mas **não** em navegador.)
+- [x] Fluxo manual com editor e leitor conferido no navegador. (Seção "Conferência no navegador": autorização do leitor, logout, nota inválida e proteção de vínculo pelas telas do SIGA. Os cadastros dessa conferência foram feitos pelo Admin; a criação pelos formulários do SIGA está no roteiro HTTP, ações 2–5.)
 - [ ] README seguido em uma pasta nova por outro integrante. (Foi seguido em pasta nova, mas pelo mesmo ambiente, não por outro integrante.)
 - [x] Migrações e requirements incluídos; banco e ambiente virtual excluídos. (`git ls-files` lista `academico/migrations/0001_initial.py` e `requirements.txt`; nenhum `.venv` ou `db.sqlite3`)
 - [ ] Documentação, evidências e retrospectiva atualizadas. (Documentação e evidências: este arquivo. A retrospectiva de [05_AULA_DEMONSTRACAO.md](05_AULA_DEMONSTRACAO.md) é da turma e não foi feita.)
