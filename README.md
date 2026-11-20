@@ -12,6 +12,7 @@ Atividades práticas (hands-on) da disciplina.
 | 06 | `primeira_interface_web/` | Primeira interface web do Sistema de Gestão de Tarefas | `python manage.py runserver` |
 | 07 | `primeira_interface_web/` | Persistência com models, migrações e Admin | `python manage.py migrate && python manage.py runserver` |
 | 10 | `siga_django/` | SIGA — integração e entrega com Django | `python manage.py migrate && python manage.py runserver` |
+| Extra | `aula_extra_apis/` | APIs com Django e FastAPI | ver README da pasta |
 
 Entre na pasta da atividade (`cd nome_da_pasta`) antes de executar.
 
