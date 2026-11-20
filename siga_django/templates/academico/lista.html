@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block content %}<h1>{{ titulo }}</h1>
+{% if user.is_staff %}<p><a class="botao" href="{% url 'criar' entidade %}">Novo registro</a></p>{% endif %}
+{% if entidade == 'alunos' %}<form method="get"><label for="q">Buscar por nome</label>
+<input id="q" name="q" value="{{ busca }}"><button>Buscar</button></form>{% endif %}
+<div class="tabela"><table><thead><tr><th>Registro</th>{% if entidade == 'matriculas' %}<th>Nota 1</th><th>Nota 2</th><th>Média</th><th>Situação</th>{% endif %}
+{% if user.is_staff %}<th>Ações</th>{% endif %}</tr></thead><tbody>
+{% for objeto in objetos %}<tr><td>{{ objeto }}</td>
+{% if entidade == 'matriculas' %}<td>{{ objeto.nota1|default_if_none:'—' }}</td><td>{{ objeto.nota2|default_if_none:'—' }}</td>
+<td>{{ objeto.media|default_if_none:'—' }}</td><td>{{ objeto.situacao }}</td>{% endif %}
+{% if user.is_staff %}<td><a href="{% url 'editar' entidade objeto.pk %}">Editar</a> · <a href="{% url 'excluir' entidade objeto.pk %}">Excluir</a></td>{% endif %}</tr>
+{% empty %}<tr><td>Nenhum registro encontrado.</td></tr>{% endfor %}</tbody></table></div>{% endblock %}

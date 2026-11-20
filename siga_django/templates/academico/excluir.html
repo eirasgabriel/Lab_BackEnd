@@ -1,0 +1,3 @@
+{% extends 'base.html' %}{% block content %}<h1>Confirmar exclusão</h1><p>{{ objeto }}</p>
+<form method="post">{% csrf_token %}<button>Confirmar exclusão</button>
+<a href="{% url 'listar' entidade %}">Cancelar</a></form>{% endblock %}
